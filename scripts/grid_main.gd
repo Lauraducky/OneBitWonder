@@ -8,7 +8,7 @@ var display = 0
 func _ready():
 	pass
 
-func setup():
+func setup(src_file):
 	pass
 
 func next():
