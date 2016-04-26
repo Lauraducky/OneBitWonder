@@ -6,30 +6,20 @@ var is_setup = true
 var is_pressed = false
 
 func _ready():
-	set_fixed_process(true)
+	set_process_input(true)
 
-func _fixed_process(delta):
-	if(!is_setup):
+func _input(event):
+	if(!is_setup || event.is_echo() || !event.is_pressed()):
 		return
 	
-	if(is_pressed && Input.is_action_pressed("buttons")):
-		return
-	else:
-		is_pressed = false
-	
-	
-	if (Input.is_action_pressed("up")):
+	if (event.is_action("up")):
 		print("up")
-		is_pressed = true
-	elif (Input.is_action_pressed("down")):
+	elif (event.is_action("down")):
 		print("down")
-		is_pressed = true
-	elif (Input.is_action_pressed("left")):
+	elif (event.is_action("left")):
 		print("left")
-		is_pressed = true
-	elif (Input.is_action_pressed("right")):
+	elif (event.is_action("right")):
 		print("right")
-		is_pressed = true
 
 func setup():
 	
