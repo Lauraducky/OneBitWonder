@@ -2,8 +2,12 @@
 extends Node2D
 
 var grid
-var is_setup = true
-var is_pressed = false
+var is_setup = false
+
+var c0
+var c1
+
+var grid_template = preload("res://scenes/grid.scn")
 
 func _ready():
 	set_process_input(true)
@@ -13,14 +17,29 @@ func _input(event):
 		return
 	
 	if (event.is_action("up")):
-		print("up")
+		grid.up()
 	elif (event.is_action("down")):
-		print("down")
+		grid.down()
 	elif (event.is_action("left")):
-		print("left")
+		grid.left()
 	elif (event.is_action("right")):
-		print("right")
-
-func setup():
+		grid.right()
+	elif (event.is_action("speed_up")):
+		print("up")
+	elif (event.is_action("speed_down")):
+		print("down")
 	
+	if (grid.is_solved()):
+		print("solved")
+
+func setup(src_file):
+	grid = grid_template.instance()
+	grid.setup(src_file)
+	add_child(grid)
 	is_setup = true
+
+func _on_display_timer_timeout():
+	if(!is_setup):
+		return
+	var colour = grid.next()
+	print(colour)

@@ -9,7 +9,14 @@ func _ready():
 	pass
 
 func setup(src_file):
-	pass
+	var file = File.new()
+	file.open(src_file, File.READ)
+	
+	while(!file.eof_reached()):
+		line = file.get_line()
+		print(line)
+	file.close()
+	
 
 func next():
 	display += 1
@@ -35,3 +42,10 @@ func up():
 
 func down():
 	gears[selection].down()
+
+func is_solved():
+	for gear in gears:
+		if gear.selection() == 1:
+			return false
+	return true
+
