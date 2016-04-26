@@ -5,16 +5,21 @@ var grid
 var is_setup = false
 var curr_speed = 1.0
 var exiting = false
-var exit_timer
-var c0
-var c1
+
+var c0 = Color(1,0,1,0.7)
+var c1 = Color(1,0,0,0.7)
 
 var grid_template = preload("res://scenes/grid.scn")
 
+#node refs
+var background
+var exit_timer
+
 func _ready():
 	set_process_input(true)
-	setup("res://levels/level0.txt")
+	background = get_node("background")
 	exit_timer = get_node("exit_timer")
+	setup("res://levels/level0.txt")
 
 func _input(event):
 	if(!is_setup || event.is_echo()):
@@ -51,14 +56,19 @@ func setup(src_file):
 	grid.setup(src_file)
 	add_child(grid)
 	is_setup = true
+	set_colour(grid.get_selected().selection())
 
 func _on_display_timer_timeout():
 	if(!is_setup):
 		return
 	var colour = grid.next()
-	#TODO: make the screen that colour
-	print(colour)
+	set_colour(colour)
 
+func set_colour(colour):
+	if (colour == 0):
+		background.change_colour(c0)
+	else:
+		background.change_colour(c1)
 
 func _on_exit_timer_timeout():
 	if(exiting):
