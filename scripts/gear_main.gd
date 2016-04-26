@@ -8,8 +8,12 @@ func _ready():
 	pass
 
 func setup(width, setting):
-	self.faces = faces
-	self.rotation = 0
+	faces = []
+	rotation = setting
+	
+	for i in range(width - 1):
+		faces.append(1)
+	faces.append(0)
 
 func selection():
 	return faces[rotation]

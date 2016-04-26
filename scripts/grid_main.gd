@@ -5,6 +5,8 @@ var gears = []
 var selection
 var display = 0
 
+var gear_template = preload("res://scenes/gear.scn")
+
 func _ready():
 	pass
 
@@ -13,10 +15,15 @@ func setup(src_file):
 	file.open(src_file, File.READ)
 	
 	while(!file.eof_reached()):
-		line = file.get_line()
-		print(line)
+		var line = file.get_line()
+		var numbers = line.split(" ")
+		var gear = gear_template.instance()
+		gear.setup(int(numbers[0]), int(numbers[1]))
+		add_child(gear)
+		gears.append(gear)
 	file.close()
 	
+	selection = 0
 
 func next():
 	display += 1
@@ -25,7 +32,7 @@ func next():
 	return gears[display].selection()
 
 func get_selected():
-	return gears[selected]
+	return gears[selection]
 
 func left():
 	selection -= 1

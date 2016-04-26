@@ -11,6 +11,7 @@ var grid_template = preload("res://scenes/grid.scn")
 
 func _ready():
 	set_process_input(true)
+	setup("res://levels/level0.txt")
 
 func _input(event):
 	if(!is_setup || event.is_echo() || !event.is_pressed()):
