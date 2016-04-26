@@ -7,7 +7,7 @@ var faces = []
 func _ready():
 	pass
 
-func setup(width, faces):
+func setup(width, setting):
 	self.faces = faces
 	self.rotation = 0
 
