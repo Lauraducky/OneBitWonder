@@ -14,11 +14,13 @@ var grid_template = preload("res://scenes/grid.scn")
 #node refs
 var background
 var exit_timer
+var display_timer
 
 func _ready():
 	set_process_input(true)
 	background = get_node("background")
 	exit_timer = get_node("exit_timer")
+	display_timer = get_node("display_timer")
 	setup("res://levels/level0.txt")
 
 func _input(event):
@@ -44,9 +46,15 @@ func _input(event):
 	elif (event.is_action("right")):
 		grid.right()
 	elif (event.is_action("speed_up")):
-		print("up")
+		curr_speed -= 0.1
+		if (curr_speed < 0.1):
+			curr_speed = 0.1
+		display_timer.set_wait_time(curr_speed)
 	elif (event.is_action("speed_down")):
-		print("down")
+		curr_speed += 0.1
+		if (curr_speed > 2):
+			curr_speed = 2
+		display_timer.set_wait_time(curr_speed)
 	
 	if (grid.is_solved()):
 		print("solved")
